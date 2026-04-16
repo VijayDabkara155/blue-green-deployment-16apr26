@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-green
+  namespace: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp
+      version: green
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: green
+    spec:
+      containers:
+      - name: app
+        image: nginx
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh","-c"]
+        args:
+          - echo "<h1 style='color:green'>GREEN VERSION</h1>" > /usr/share/nginx/html/index.html && nginx -g 'daemon off;';
